@@ -5,6 +5,7 @@ import os
 
 from app.database import engine, Base
 import app.models  # noqa: F401 — регистрация моделей для create_all
+from app.routers import auth
 
 app = FastAPI(title="UniJobs API", version="1.0.0")
 
@@ -24,6 +25,9 @@ app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
 @app.on_event("startup")
 def on_startup():
     Base.metadata.create_all(bind=engine)
+
+
+app.include_router(auth.router)
 
 
 @app.get("/")
