@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 import os
 
 from app.database import engine, Base
+import app.models  # noqa: F401 — регистрация моделей для create_all
 
 app = FastAPI(title="UniJobs API", version="1.0.0")
 

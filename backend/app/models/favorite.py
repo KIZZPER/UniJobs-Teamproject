@@ -1,0 +1,17 @@
+from sqlalchemy import Column, Integer, ForeignKey, DateTime
+from sqlalchemy.orm import relationship
+from datetime import datetime
+
+from app.database import Base
+
+
+class Favorite(Base):
+    __tablename__ = "favorites"
+
+    id = Column(Integer, primary_key=True, index=True)
+    student_id = Column(Integer, ForeignKey("students.id"), nullable=False)
+    vacancy_id = Column(Integer, ForeignKey("vacancies.id"), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    student = relationship("Student", back_populates="favorites")
+    vacancy = relationship("Vacancy", back_populates="favorites")
