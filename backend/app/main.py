@@ -5,7 +5,7 @@ import os
 
 from app.database import engine, Base
 import app.models  # noqa: F401 — регистрация моделей для create_all
-from app.routers import auth
+from app.routers import auth, vacancies
 
 app = FastAPI(title="UniJobs API", version="1.0.0")
 
@@ -28,6 +28,8 @@ def on_startup():
 
 
 app.include_router(auth.router)
+app.include_router(vacancies.router)
+app.include_router(vacancies.categories_router)
 
 
 @app.get("/")
