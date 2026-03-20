@@ -18,7 +18,7 @@ class Vacancy(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255), nullable=False)
     description = Column(Text, nullable=False)
-    type = Column(SAEnum(VacancyType), nullable=False)
+    type = Column(SAEnum(VacancyType, native_enum=False), nullable=False)
     salary = Column(String(100))
     employer_id = Column(Integer, ForeignKey("employers.id"), nullable=False)
     category_id = Column(Integer, ForeignKey("categories.id"))

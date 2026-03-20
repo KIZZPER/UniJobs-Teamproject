@@ -39,8 +39,8 @@ def test_login_success(test_client):
         "full_name": "Тест",
         "role": "student",
     })
-    resp = test_client.post("/api/auth/login", json={
-        "email": "login@test.com",
+    resp = test_client.post("/api/auth/login", data={
+        "username": "login@test.com",
         "password": "mypass",
     })
     assert resp.status_code == 200
@@ -54,8 +54,8 @@ def test_login_wrong_password(test_client):
         "full_name": "Тест",
         "role": "student",
     })
-    resp = test_client.post("/api/auth/login", json={
-        "email": "wrong@test.com",
+    resp = test_client.post("/api/auth/login", data={
+        "username": "wrong@test.com",
         "password": "incorrect",
     })
     assert resp.status_code == 401

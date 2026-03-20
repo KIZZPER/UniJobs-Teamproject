@@ -19,7 +19,7 @@ class User(Base):
     email = Column(String(255), unique=True, nullable=False, index=True)
     hashed_password = Column(String(255), nullable=False)
     full_name = Column(String(255), nullable=False)
-    role = Column(SAEnum(UserRole), nullable=False)
+    role = Column(SAEnum(UserRole, native_enum=False), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     student = relationship("Student", back_populates="user", uselist=False)

@@ -22,7 +22,7 @@ class Application(Base):
     student_id = Column(Integer, ForeignKey("students.id"), nullable=False)
     cover_letter = Column(Text)
     resume_path = Column(String(500))
-    status = Column(SAEnum(ApplicationStatus), default=ApplicationStatus.pending)
+    status = Column(SAEnum(ApplicationStatus, native_enum=False), default=ApplicationStatus.pending)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     vacancy = relationship("Vacancy", back_populates="applications")
