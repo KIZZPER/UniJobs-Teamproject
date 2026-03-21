@@ -11,6 +11,12 @@ const statusLabels = {
   rejected: { text: "Отказ", cls: "bg-danger" },
 };
 
+const typeLabels = {
+  internship: "Стажировка",
+  part_time: "Подработка",
+  project: "Проект",
+};
+
 function MyApplicationsPage() {
   const { user } = useAuth();
   const [applications, setApplications] = useState([]);
@@ -68,14 +74,39 @@ function MyApplicationsPage() {
           </Link>
         </div>
       ) : (
-        <div className="table-responsive">
+        <>
+        <div className="d-md-none">
+          {applications.map((app) => {
+            const st = statusLabels[app.status] || {
+              text: app.status,
+              cls: "bg-secondary",
+            };
+            return (
+              <div className="card mb-3" key={app.id}>
+                <div className="card-body">
+                  <h6 className="card-title mb-1">
+                    <Link to={`/vacancies/${app.vacancy_id}`}>
+                      {app.vacancy?.title || `#${app.vacancy_id}`}
+                    </Link>
+                  </h6>
+                  <p className="text-muted small mb-2">
+                    {typeLabels[app.vacancy?.type] || app.vacancy?.type} · {new Date(app.created_at).toLocaleDateString("ru-RU")}
+                  </p>
+                  <span className={`badge ${st.cls}`}>{st.text}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="d-none d-md-block table-responsive">
           <table className="table table-hover align-middle">
             <thead className="table-light">
               <tr>
                 <th>Вакансия</th>
-                <th className="d-none d-md-table-cell">Тип</th>
+                <th>Тип</th>
                 <th>Статус</th>
-                <th className="d-none d-md-table-cell">Дата</th>
+                <th>Дата</th>
               </tr>
             </thead>
             <tbody>
@@ -91,13 +122,13 @@ function MyApplicationsPage() {
                         {app.vacancy?.title || `#${app.vacancy_id}`}
                       </Link>
                     </td>
-                    <td className="d-none d-md-table-cell">
-                      {app.vacancy?.type}
+                    <td>
+                      {typeLabels[app.vacancy?.type] || app.vacancy?.type}
                     </td>
                     <td>
                       <span className={`badge ${st.cls}`}>{st.text}</span>
                     </td>
-                    <td className="d-none d-md-table-cell">
+                    <td>
                       {new Date(app.created_at).toLocaleDateString("ru-RU")}
                     </td>
                   </tr>
@@ -106,6 +137,7 @@ function MyApplicationsPage() {
             </tbody>
           </table>
         </div>
+        </>
       )}
     </div>
   );

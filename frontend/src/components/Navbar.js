@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate("/");
   };
+
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-primary">
@@ -20,21 +23,20 @@ function Navbar() {
         <button
           className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
+          onClick={() => setIsOpen(!isOpen)}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`}>
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/vacancies">
+              <Link className="nav-link" to="/vacancies" onClick={closeMenu}>
                 Вакансии
               </Link>
             </li>
             {user && user.role === "student" && (
               <li className="nav-item">
-                <Link className="nav-link" to="/my-applications">
+                <Link className="nav-link" to="/my-applications" onClick={closeMenu}>
                   Мои заявки
                 </Link>
               </li>
@@ -60,12 +62,12 @@ function Navbar() {
             ) : (
               <>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/login">
+                  <Link className="nav-link" to="/login" onClick={closeMenu}>
                     Войти
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/register">
+                  <Link className="nav-link" to="/register" onClick={closeMenu}>
                     Регистрация
                   </Link>
                 </li>
