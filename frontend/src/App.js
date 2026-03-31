@@ -10,6 +10,7 @@ import VacancyListPage from "./pages/VacancyListPage";
 import VacancyDetailPage from "./pages/VacancyDetailPage";
 import ApplyPage from "./pages/ApplyPage";
 import MyApplicationsPage from "./pages/MyApplicationsPage";
+import CreateVacancyPage from "./pages/CreateVacancyPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/vacancies" element={<VacancyListPage />} />
+              <Route path="/vacancies/new" element={<CreateVacancyPage />} />
               <Route path="/vacancies/:id" element={<VacancyDetailPage />} />
               <Route path="/vacancies/:id/apply" element={<ApplyPage />} />
               <Route path="/my-applications" element={<MyApplicationsPage />} />

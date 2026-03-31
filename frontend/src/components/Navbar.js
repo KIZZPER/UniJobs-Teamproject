@@ -41,6 +41,13 @@ function Navbar() {
                 </Link>
               </li>
             )}
+            {user && user.role === "employer" && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/vacancies/new" onClick={closeMenu}>
+                  Создать вакансию
+                </Link>
+              </li>
+            )}
           </ul>
           <ul className="navbar-nav">
             {user ? (
