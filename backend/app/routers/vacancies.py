@@ -83,6 +83,31 @@ def list_vacancies(
     return VacancyListResponse(items=items, total=total, page=page, per_page=per_page)
 
 
+@router.get("/my", response_model=VacancyListResponse)
+def my_vacancies(
+    page: int = Query(1, ge=1),
+    per_page: int = Query(10, ge=1, le=100),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    if current_user.role != UserRole.employer:
+        raise HTTPException(status_code=403, detail="Только работодатель может просматривать свои вакансии")
+
+    employer = db.query(Employer).filter(Employer.user_id == current_user.id).first()
+    if not employer:
+        raise HTTPException(status_code=404, detail="Профиль работодателя не найден")
+
+    q = db.query(Vacancy).options(
+        joinedload(Vacancy.employer),
+        joinedload(Vacancy.category),
+    ).filter(Vacancy.employer_id == employer.id)
+
+    total = q.count()
+    items = q.order_by(Vacancy.created_at.desc()).offset((page - 1) * per_page).limit(per_page).all()
+
+    return VacancyListResponse(items=items, total=total, page=page, per_page=per_page)
+
+
 @router.get("/{vacancy_id}", response_model=VacancyResponse)
 def get_vacancy(vacancy_id: int, db: Session = Depends(get_db)):
     vacancy = (

@@ -34,13 +34,6 @@ function Navbar() {
                 Вакансии
               </Link>
             </li>
-            {user && user.role === "student" && (
-              <li className="nav-item">
-                <Link className="nav-link" to="/my-applications" onClick={closeMenu}>
-                  Мои заявки
-                </Link>
-              </li>
-            )}
             {user && user.role === "employer" && (
               <li className="nav-item">
                 <Link className="nav-link" to="/vacancies/new" onClick={closeMenu}>
@@ -52,6 +45,20 @@ function Navbar() {
           <ul className="navbar-nav">
             {user ? (
               <>
+                {user.role === "employer" && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/my-vacancies" onClick={closeMenu}>
+                      Мои вакансии
+                    </Link>
+                  </li>
+                )}
+                {user.role === "student" && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/my-applications" onClick={closeMenu}>
+                      Мои заявки
+                    </Link>
+                  </li>
+                )}
                 <li className="nav-item">
                   <span className="nav-link text-light">
                     {user.full_name}
