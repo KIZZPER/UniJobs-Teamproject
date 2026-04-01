@@ -21,11 +21,20 @@ class VacancyShort(BaseModel):
         from_attributes = True
 
 
+class UserShort(BaseModel):
+    full_name: str
+    email: str
+
+    class Config:
+        from_attributes = True
+
+
 class StudentShort(BaseModel):
     id: int
     university: Optional[str] = None
     faculty: Optional[str] = None
     course: Optional[int] = None
+    user: Optional[UserShort] = None
 
     class Config:
         from_attributes = True

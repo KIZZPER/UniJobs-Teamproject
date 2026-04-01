@@ -8,6 +8,7 @@ from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.user import User, UserRole
 from app.models.student import Student
+from app.models.user import User as UserModel
 from app.models.vacancy import Vacancy
 from app.models.application import Application, ApplicationStatus
 from app.models.resume import Resume
@@ -78,7 +79,7 @@ def create_application(
 
     application = (
         db.query(Application)
-        .options(joinedload(Application.vacancy), joinedload(Application.student))
+        .options(joinedload(Application.vacancy), joinedload(Application.student).joinedload(Student.user))
         .filter(Application.id == application.id)
         .first()
     )
@@ -101,7 +102,7 @@ def get_my_applications(
 
     query = (
         db.query(Application)
-        .options(joinedload(Application.vacancy), joinedload(Application.student))
+        .options(joinedload(Application.vacancy), joinedload(Application.student).joinedload(Student.user))
         .filter(Application.student_id == student.id)
         .order_by(Application.created_at.desc())
     )
@@ -129,7 +130,7 @@ def get_vacancy_applications(
 
     query = (
         db.query(Application)
-        .options(joinedload(Application.vacancy), joinedload(Application.student))
+        .options(joinedload(Application.vacancy), joinedload(Application.student).joinedload(Student.user))
         .filter(Application.vacancy_id == vacancy_id)
         .order_by(Application.created_at.desc())
     )
@@ -148,7 +149,7 @@ def get_application(
 ):
     application = (
         db.query(Application)
-        .options(joinedload(Application.vacancy), joinedload(Application.student))
+        .options(joinedload(Application.vacancy), joinedload(Application.student).joinedload(Student.user))
         .filter(Application.id == application_id)
         .first()
     )
@@ -178,7 +179,7 @@ def update_application_status(
 ):
     application = (
         db.query(Application)
-        .options(joinedload(Application.vacancy), joinedload(Application.student))
+        .options(joinedload(Application.vacancy), joinedload(Application.student).joinedload(Student.user))
         .filter(Application.id == application_id)
         .first()
     )
@@ -198,7 +199,7 @@ def update_application_status(
 
     application = (
         db.query(Application)
-        .options(joinedload(Application.vacancy), joinedload(Application.student))
+        .options(joinedload(Application.vacancy), joinedload(Application.student).joinedload(Student.user))
         .filter(Application.id == application.id)
         .first()
     )

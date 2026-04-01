@@ -85,9 +85,17 @@ function MyVacanciesPage() {
                     {v.category && ` · ${v.category.name}`}
                     {v.salary && ` · ${v.salary}`}
                   </p>
-                  <span className="text-muted small">
-                    {new Date(v.created_at).toLocaleDateString("ru-RU")}
-                  </span>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <span className="text-muted small">
+                      {new Date(v.created_at).toLocaleDateString("ru-RU")}
+                    </span>
+                    <Link
+                      to={`/my-vacancies/${v.id}/applications`}
+                      className="btn btn-sm btn-outline-primary"
+                    >
+                      Отклики
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
@@ -103,6 +111,7 @@ function MyVacanciesPage() {
                   <th>Категория</th>
                   <th>Зарплата</th>
                   <th>Дата</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -115,6 +124,14 @@ function MyVacanciesPage() {
                     <td>{v.category?.name || "—"}</td>
                     <td>{v.salary || "—"}</td>
                     <td>{new Date(v.created_at).toLocaleDateString("ru-RU")}</td>
+                    <td>
+                      <Link
+                        to={`/my-vacancies/${v.id}/applications`}
+                        className="btn btn-sm btn-outline-primary"
+                      >
+                        Отклики
+                      </Link>
+                    </td>
                   </tr>
                 ))}
               </tbody>
