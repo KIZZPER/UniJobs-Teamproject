@@ -9,5 +9,3 @@ from app.models.review import Review
 from app.models.notification import Notification
 from app.models.favorite import Favorite
 from app.models.interview import Interview
-from app.models.tag import Tag
-from app.models.vacancy_tag import VacancyTag

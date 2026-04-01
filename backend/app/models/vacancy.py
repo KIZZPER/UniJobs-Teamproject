@@ -29,4 +29,3 @@ class Vacancy(Base):
     category = relationship("Category", back_populates="vacancies")
     applications = relationship("Application", back_populates="vacancy")
     favorites = relationship("Favorite", back_populates="vacancy")
-    vacancy_tags = relationship("VacancyTag", back_populates="vacancy")
